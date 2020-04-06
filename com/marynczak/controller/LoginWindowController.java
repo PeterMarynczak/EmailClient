@@ -1,4 +1,4 @@
-package com.marynczak.view;
+package com.marynczak.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
