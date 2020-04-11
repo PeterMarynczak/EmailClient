@@ -3,6 +3,7 @@ package com.marynczak.view;
 import com.marynczak.EmailManager;
 import com.marynczak.controller.BaseController;
 import com.marynczak.controller.LoginWindowController;
+import com.marynczak.controller.MainWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,8 +21,17 @@ public class ViewFactory {
 
     public void showLoginWindow(){
         System.out.println("show login window called");
-
         BaseController controller = new LoginWindowController(emailManager, this, "LoginWindow.fxml");
+        inintializeStage(controller);
+    }
+
+    public void showMainWindow(){
+        System.out.println("main window called");
+        BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
+        inintializeStage(controller);
+    }
+
+    private void inintializeStage(BaseController controller){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFxmlName()));
         fxmlLoader.setController(controller);
         Parent parent;
@@ -35,5 +45,9 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+    }
+    //method responsible for closing particular stage
+    public void closeStage(Stage stageToClose){
+        stageToClose.close();
     }
 }

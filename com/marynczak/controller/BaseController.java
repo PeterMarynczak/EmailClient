@@ -4,8 +4,8 @@ import com.marynczak.EmailManager;
 import com.marynczak.view.ViewFactory;
 
 public abstract class BaseController {
-    private EmailManager emailManager;
-    private ViewFactory viewFactory;
+    protected EmailManager emailManager;
+    protected ViewFactory viewFactory;
     private String fxmlName;
 
     public BaseController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
