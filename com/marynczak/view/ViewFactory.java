@@ -4,6 +4,7 @@ import com.marynczak.EmailManager;
 import com.marynczak.controller.BaseController;
 import com.marynczak.controller.LoginWindowController;
 import com.marynczak.controller.MainWindowController;
+import com.marynczak.controller.OptionsWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +29,12 @@ public class ViewFactory {
     public void showMainWindow(){
         System.out.println("main window called");
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
+        inintializeStage(controller);
+    }
+
+    public void showOptionsWindow(){
+        System.out.println("options window called");
+        BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
         inintializeStage(controller);
     }
 
