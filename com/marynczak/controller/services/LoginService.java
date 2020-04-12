@@ -4,6 +4,10 @@ import com.marynczak.EmailManager;
 import com.marynczak.controller.EmailLoginResult;
 import com.marynczak.model.EmailAccount;
 
+import javax.mail.*;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
+
 public class LoginService {
 
     EmailAccount emailAccount;
@@ -15,6 +19,34 @@ public class LoginService {
     }
 
     public EmailLoginResult login(){
+        Authenticator authenticator = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(emailAccount.getAddress(),emailAccount.getPassword());
+            }
+        };
 
+        try {
+            Session session = Session.getInstance(emailAccount.getProperties(), authenticator);
+            Store store = session.getStore("imaps");
+            store.connect(emailAccount.getProperties().getProperty("incomingHost"),
+                    emailAccount.getAddress(),
+                    emailAccount.getPassword());
+            emailAccount.setStore(store);
+
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+            return EmailLoginResult.FAILED_BY_NETWORK;
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return EmailLoginResult.FAILED_BY_CREDENTIALS;
+        } catch (AuthenticationFailedException e) {
+            e.printStackTrace();
+            return EmailLoginResult.FAILED_BY_UNEXPECTED_ERROR
+        } catch (Exception e) {
+            e.printStackTrace();
+            return EmailLoginResult.FAILED_BY_UNEXPECTED_ERROR
+        }
+        return EmailLoginResult.SUCCESS;
     }
 }
