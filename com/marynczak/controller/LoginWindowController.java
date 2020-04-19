@@ -43,6 +43,7 @@ public class LoginWindowController extends BaseController implements Initializab
                     case SUCCESS:
                         System.out.println("login succesfull!" + emailAccount);
                         viewFactory.showMainWindow();
+                        //getting stage in order to pass to the method responsible for closing stage
                         Stage stage = (Stage) errorLabel.getScene().getWindow();
                         viewFactory.closeStage(stage);
                         return;
@@ -58,10 +59,6 @@ public class LoginWindowController extends BaseController implements Initializab
             });
         }
         System.out.println("loginButtonAction!!");
-        viewFactory.showMainWindow();
-        //getting stage in order to pass to the method responsible for closing stage
-        Stage stage = (Stage) errorLabel.getScene().getWindow();
-        viewFactory.closeStage(stage);
     }
 
     private boolean fieldsAreValid() {
