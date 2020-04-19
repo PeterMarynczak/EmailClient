@@ -4,6 +4,7 @@ module EmailClient {
     requires javafx.graphics;
     requires activation;
     requires java.mail;
+    requires javafx.web;
 
     opens com.marynczak;
     opens com.marynczak.view;
