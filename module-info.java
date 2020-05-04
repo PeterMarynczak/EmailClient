@@ -9,4 +9,5 @@ module EmailClient {
     opens com.marynczak;
     opens com.marynczak.view;
     opens com.marynczak.controller;
+    opens com.marynczak.model;
 }
