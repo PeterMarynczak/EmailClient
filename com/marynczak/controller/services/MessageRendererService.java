@@ -21,10 +21,17 @@ public class MessageRendererService extends Service {
     public MessageRendererService(WebEngine webEngine) {
         this.webEngine = webEngine;
         stringBuffer = new StringBuffer();
+        this.setOnSucceeded(event -> {
+            displayMessage();
+        });
     }
 
     public void setEmailMessage(EmailMessage emailMessage){
         this.emailMessage = emailMessage;
+    }
+
+    private void displayMessage(){
+        webEngine.loadContent(stringBuffer.toString());
     }
 
     @Override
@@ -32,6 +39,11 @@ public class MessageRendererService extends Service {
         return new Task() {
             @Override
             protected Object call() throws Exception {
+                try {
+                    loadMessage();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 return null;
             }
         };

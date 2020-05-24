@@ -1,6 +1,7 @@
 package com.marynczak.controller;
 
 import com.marynczak.EmailManager;
+import com.marynczak.controller.services.MessageRendererService;
 import com.marynczak.model.EmailMessage;
 import com.marynczak.model.EmailTreeItem;
 import com.marynczak.model.SizeInteger;
@@ -15,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
 
+import javax.mail.Message;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -45,6 +47,8 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     private TableColumn<EmailMessage, Date> dateCol;
 
+    private MessageRendererService messageRendererService;
+
     public MainWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
         super(emailManager, viewFactory, fxmlName);
     }
@@ -65,6 +69,22 @@ public class MainWindowController extends BaseController implements Initializabl
         setUpEmailsTableView();
         setUpFolderSelection();
         setUpBoldRows();
+        setUpMessageRendererService();
+        setUpMessageSelection();
+    }
+
+    private void setUpMessageSelection() {
+        emailsTableView.setOnMouseClicked(event -> {
+            EmailMessage emailMessage = emailsTableView.getSelectionModel().getSelectedItem();
+            if(emailMessage != null){
+                messageRendererService.setEmailMessage(emailMessage);
+                messageRendererService.restart();
+            }
+        });
+    }
+
+    private void setUpMessageRendererService() {
+        messageRendererService = new MessageRendererService(emailWebView.getEngine());
     }
 
     private void setUpBoldRows() {
