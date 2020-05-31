@@ -1,10 +1,7 @@
 package com.marynczak.view;
 
 import com.marynczak.EmailManager;
-import com.marynczak.controller.BaseController;
-import com.marynczak.controller.LoginWindowController;
-import com.marynczak.controller.MainWindowController;
-import com.marynczak.controller.OptionsWindowController;
+import com.marynczak.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -64,6 +61,12 @@ public class ViewFactory {
     public void showOptionsWindow(){
         System.out.println("options window called");
         BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
+        inintializeStage(controller);
+    }
+
+    public void showComposedMessageWindow(){
+        System.out.println("composeMessage window called");
+        BaseController controller = new ComposeMessageController(emailManager, this, "ComposeMessageWindow.fxml");
         inintializeStage(controller);
     }
 
